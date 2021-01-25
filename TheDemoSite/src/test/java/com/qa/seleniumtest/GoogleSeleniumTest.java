@@ -31,17 +31,47 @@ public class GoogleSeleniumTest {
 	
 	@Test
 	public void test_GoogleKitten() throws InterruptedException {
-		driver.get("http://www.google.com");
-		//find google search bar
-		target = driver.findElement(By.name("q"));
-		target.sendKeys("Kittens");
-		target.submit();
-		assertEquals("Kittens - Google Search", driver.getTitle());
-		// assert that image is present in this path
-		target = driver.findElement(By.xpath("//*[@id=\"dimg_33\"]"));
-		boolean imagePresent = target.isDisplayed();
-		assertTrue(imagePresent);
 		
+		driver.get("http://thedemosite.co.uk");
+		//find google search bar
+		target = driver.findElement(By.xpath(
+				"/html/body/div/center/table/tbody/tr[2]/td/div/center/table/tbody/tr/td[2]/p/small/a[3]"));
+		target.click();
+		
+		target = driver.findElement(By.name("username"));
+		target.sendKeys("root");
+		target = driver.findElement(By.name("password"));
+		target.sendKeys("root");
+		target = driver.findElement(By.xpath(
+				"/html/body/table/tbody/tr/td[1]/form/div/center/table/tbody/tr/td[1]/div/center/table/tbody/tr[3]/td[2]/p/input"));
+		target.submit();
+		
+		target = driver.findElement(By.xpath(
+				"/html/body/div/center/table/tbody/tr[2]/td/div/center/table/tbody/tr/td[2]/p/small/a[4]"));
+		target.click();
+		
+		target = driver.findElement(By.name("username"));
+		target.sendKeys("root");
+		target = driver.findElement(By.name("password"));
+		target.sendKeys("root");
+		
+		target = driver.findElement(By.xpath(
+				"/html/body/table/tbody/tr/td[1]/form/div/center/table/tbody/tr/td[1]/table/tbody/tr[3]/td[2]/p/input"));
+		target.submit();
+		
+		target = driver.findElement(By.xpath(
+				"/html/body/table/tbody/tr/td[1]/big/blockquote/blockquote/font/center/b"));
+		assertEquals("**Successful Login**", target.getText());
+		
+//		target = driver.findElement(By.name("q"));
+//		target.sendKeys("Kittens");
+//		target.submit();
+//		assertEquals("Kittens - Google Search", driver.getTitle());
+//		// assert that image is present in this path
+//		target = driver.findElement(By.xpath("//*[@id=\"dimg_33\"]"));
+//		boolean imagePresent = target.isDisplayed();
+//		assertTrue(imagePresent);
+//		
 //		List<WebElement> listToScan = driver.findElements();
 //		for (WebElement handle : listToScane) {
 //			if(handle.getText.equals("this")) {
