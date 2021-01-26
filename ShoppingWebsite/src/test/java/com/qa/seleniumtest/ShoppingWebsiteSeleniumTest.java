@@ -1,6 +1,7 @@
 package com.qa.seleniumtest;
 
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
@@ -16,6 +17,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.PageFactory;
+
+import com.qa.seleniumtest.webpages.pages.ShoppingSiteHomepage;
 
 public class ShoppingWebsiteSeleniumTest {
 	
@@ -32,12 +36,12 @@ public class ShoppingWebsiteSeleniumTest {
 	}
 	
 	@Test
+	@Disabled
 	public void test_FindDress() throws InterruptedException {
 		driver.get("http://automationpractice.com/index.php");
 		
 		target = driver.findElement(By.id("search_query_top"));
 		target.sendKeys("dress");
-		
 		target = driver.findElement(By.xpath(
 				"/html/body/div/div[1]/header/div[3]/div/div/div[2]/form/button"));
 		target.click();
@@ -49,10 +53,14 @@ public class ShoppingWebsiteSeleniumTest {
 		assertTrue(target.getText().contains("Printed Dress"));
 		Thread.sleep(5000);
 	}
+	
 	@Test
-	@Disabled
-	public void test_GooglePuppies() {
+	public void test_FindDressPOM() throws InterruptedException {
+		ShoppingSiteHomepage website = PageFactory.initElements(driver, ShoppingSiteHomepage.class);
+		website.searchItem("Dress");
 		
+		Thread.sleep(2000);
+		assertEquals(website.searchPage.findItem(), "Printed Dress");
 	}
 	
 	@AfterAll

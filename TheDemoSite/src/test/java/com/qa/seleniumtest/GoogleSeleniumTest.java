@@ -15,6 +15,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.PageFactory;
+
+import com.qa.seleniumtest.demosite.pages.DemoAddUsersPage;
+import com.qa.seleniumtest.demosite.pages.DemoSiteHomePage;
 
 public class GoogleSeleniumTest {
 	
@@ -32,11 +36,26 @@ public class GoogleSeleniumTest {
 	@Test
 	public void test_GoogleKitten() throws InterruptedException {
 		
+		DemoSiteHomePage website = PageFactory.initElements(driver, DemoSiteHomePage.class);
+		//DemoAddUsersPage addUsersPage = PageFactory.initElements(driver, DemoAddUsersPage.class);
+		
+		website.navAddUser();
+		website.addUsersPage.signUp("root", "root");
+		website.navLoginPage();
+		website.loginPage.login("root", "root");
+		
+		assertEquals(website.loginPage.getSuccessCheck().getText(), "**Successful Login**");
+		Thread.sleep(5000);
+	}
+	@Test
+	@Disabled
+	public void test_GoogleNonPom() throws InterruptedException {
 		driver.get("http://thedemosite.co.uk");
 		//find google search bar
 		target = driver.findElement(By.xpath(
 				"/html/body/div/center/table/tbody/tr[2]/td/div/center/table/tbody/tr/td[2]/p/small/a[3]"));
 		target.click();
+
 		
 		target = driver.findElement(By.name("username"));
 		target.sendKeys("root");
@@ -61,7 +80,7 @@ public class GoogleSeleniumTest {
 		
 		target = driver.findElement(By.xpath(
 				"/html/body/table/tbody/tr/td[1]/big/blockquote/blockquote/font/center/b"));
-		assertEquals("**Successful Login**", target.getText());
+		assertEquals("**Successful Login**", target.getText());		
 		
 //		target = driver.findElement(By.name("q"));
 //		target.sendKeys("Kittens");
@@ -78,12 +97,6 @@ public class GoogleSeleniumTest {
 //				FIND ELEMENT HAS BEEN DELETED == false;
 //			}
 //		}
-		Thread.sleep(5000);
-	}
-	@Test
-	@Disabled
-	public void test_GooglePuppies() {
-		
 	}
 	
 	@AfterAll
